@@ -1,0 +1,10 @@
+^C:\USERS\BITEK\ONEDRIVE\PULPIT\GITHUB PROJEKTY\PROJEKTGK\BUILD\CMAKEFILES\CBDB164A2C539D2752909362C3E5A320\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/Bitek/OneDrive/Pulpit/github projekty/ProjektGK" "-BC:/Users/Bitek/OneDrive/Pulpit/github projekty/ProjektGK/build" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "C:/Users/Bitek/OneDrive/Pulpit/github projekty/ProjektGK/build/GrafikaKomputerowa.slnx"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

@@ -1,0 +1,15 @@
+# Środowisko i IDE
+.idea/
+.vscode/
+
+# Pliki budowania CMake i kompilatora
+build/
+bin/
+out/
+
+# Pliki binarne
+*.exe
+*.obj
+*.o
+*.pdb
+*.ilk
