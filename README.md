@@ -1,81 +1,80 @@
 # Real-Time 3D Room Lighting Simulation
 
-Interaktywna symulacja 3D oświetlonego wnętrza zrealizowana w **C++17** oraz **OpenGL 3.3 Core Profile**. 
+An interactive 3D simulation of an illuminated interior implemented in **C++17** and **OpenGL 3.3 Core Profile**. 
 
-Aplikacja renderuje w pełni oteksturowaną scenę pokoju z dynamicznym oświetleniem wieloźródłowym, animacjami czasu rzeczywistego (time-based) oraz interaktywną kamerą pierwszoosobową (FPS).
+The application renders a fully textured room scene featuring dynamic multi-source lighting, real-time (time-based) animations, and an interactive first-person (FPS) camera.
 
-![Prezentacja działania symulacji](showcase.gif)
-
----
-
-## Cechy projektu i architektura graficzna
-
-* **Model Oświetlenia Phonga:** Własna implementacja modelu oświetlenia we fragment shaderze (komponenty Ambient, Diffuse, Specular z uwzględnieniem tłumienia odległościowego).
-* **Obsługa wielu źródeł światła:**
-  * **Point Light:** Światło punktowe symulujące żarówkę sufitową z nieliniowym tłumieniem kwadratowym.
-  * **Spotlight:** Światło stożkowe/reflektor z gładkim wygaszaniem krawędzi (płynne przejście między kątami odcięcia `innerCutOff` i `outerCutOff`).
-  * **Dynamiczne tryby:** Możliwość przełączania w locie między oboma źródłami, wyłącznie stożkowym, wyłącznie punktowym lub całkowitym wygaszeniem.
-* **Wczytywanie modeli i tekstur:**
-  * Parsowanie geometrii i siatek z plików `.obj` przy użyciu biblioteki `tinyobjloader`.
-  * Mapowanie tekstur 2D (`.jpg`) z filtrowaniem dwuliniowym i generowaniem łańcuchów Mipmap za pośrednictwem `stb_image`.
-* **Animacje i interakcja:**
-  * Płynna, klatkowo niezależna animacja otwierania i zamykania drzwi oparta na delcie czasu (`deltaTime`) i przesuniętym punkcie obrotu (zawias).
-  * Ciągły obrót łopatek wentylatora w osi lokalnej.
-* **Kamera FPS:** Pełna swoboda ruchu we wszystkich kierunkach z obsługą wejścia z myszy (Pitch/Yaw z ograniczeniami kątowymi).
+![Simulation showcase](showcase.gif)
 
 ---
 
-## Sterowanie
+## Project Features and Graphics Architecture
 
-| Klawisz / Mysz | Akcja |
+- **Phong Lighting Model:** Custom implementation of the lighting model in the fragment shader (Ambient, Diffuse, and Specular components, including distance attenuation).
+- **Multiple Light Sources Support:**
+  * **Point Light:** A point light simulating a ceiling bulb with non-linear quadratic attenuation.
+  * **Spotlight:** A cone light/spotlight with smooth edge attenuation (smooth transition between `innerCutOff` and `outerCutOff` angles).
+  * **Dynamic Modes:** Ability to toggle on-the-fly between both light sources, spotlight only, point light only, or completely turned off.
+- **Model and Texture Loading:**
+  * Parsing geometry and meshes from `.obj` files using the `tinyobjloader` library.
+  * 2D texture mapping (`.jpg`) with bilinear filtering and Mipmap chain generation via `stb_image`.
+- **Animations and Interaction:**
+  * Smooth, framerate-independent door opening and closing animation based on time delta (`deltaTime`) and an offset pivot point (hinge).
+  * Continuous rotation of fan blades along their local axis.
+- **FPS Camera:** Full freedom of movement in all directions with mouse input support (Pitch/Yaw with angle constraints).
+
+---
+
+## Controls
+
+| Key / Mouse | Action |
 | :--- | :--- |
-| `W`, `S`, `A`, `D` | Poruszanie się po pokoju (przód, tył, lewo, prawo) |
-| `Ruch myszą` | Rozglądanie się (obrót kamery Pitch & Yaw) |
-| `E` | Interakcja: płynne otwarcie / zamknięcie drzwi |
-| `T` | Przełącznik trybów oświetlenia (Oba $\rightarrow$ Reflektor $\rightarrow$ Punktowe $\rightarrow$ Wyłączone) |
-| `ESC` | Wyjście z aplikacji |
+| `W`, `S`, `A`, `D` | Move around the room (forward, backward, left, right) |
+| `Mouse movement` | Look around (camera Pitch & Yaw rotation) |
+| `E` | Interaction: smooth opening / closing of the door |
+| `T` | Lighting mode toggle (Both &rarr; Spotlight &rarr; Point light &rarr; Off) |
+| `ESC` | Exit application |
 
 ---
 
-## Zastosowany stos technologiczny
+## Tech Stack
 
-* **Język:** C++17
-* **API Graficzne:** OpenGL 3.3 Core Profile
-* **System budowania:** CMake (z modułem `FetchContent` automatycznie pobierającym wymagane biblioteki)
-* **Biblioteki:**
-  * [GLFW](https://www.glfw.org/) – Zarządzanie oknem kontekstu OpenGL i obsługa wejścia.
-  * [GLAD](https://glad.dav1d.de/) – Moduł ładujący wskaźniki funkcji OpenGL 3.3.
-  * [GLM](https://github.com/g-truc/glm) – Biblioteka matematyczna (macierze transformacji, wektory, rzutowanie perspektywiczne).
-  * [stb_image](https://github.com/nothings/stb) – Dekodowanie plików graficznych `.jpg`.
-  * [tinyobjloader](https://github.com/tinyobjloader/tinyobjloader) – Parser plików `.obj`.
+- **Language:** C++17
+- **Graphics API:** OpenGL 3.3 Core Profile
+- **Build System:** CMake (with the `FetchContent` module automatically downloading required libraries)
+- **Libraries:**
+  * [GLFW](https://www.glfw.org/) – OpenGL context window management and input handling.
+  * [GLAD](https://glad.dav1d.de/) – OpenGL 3.3 function pointer loader.
+  * [GLM](https://github.com/g-truc/glm) – Mathematics library (transformation matrices, vectors, perspective projection).
+  * [stb_image](https://github.com/nothings/stb) – Decoding `.jpg` image files.
+  * [tinyobjloader](https://github.com/tinyobjloader/tinyobjloader) – Parser for `.obj` files.
 
 ---
 
-## Budowanie i uruchomienie
+## Build and Run
 
-### Wymagania wstępne
-* Kompilator C++ obsługujący standard C++17 (MSVC, GCC lub Clang)
-* CMake w wersji minimum 3.14
+### Prerequisites
+- A C++ compiler supporting the C++17 standard (MSVC, GCC, or Clang)
+- CMake version 3.14 or higher
 
-### Instrukcja kompilacji
+### Build Instructions
 
-1. Sklonuj repozytorium:
+1. Clone the repository:
    ```bash
-   git clone https://github.com/twoj-login/nazwa-repo.git
-   cd nazwa-repo
-   ```
+   git clone https://github.com/biteek/opengl-room-simulation.git
+   cd opengl-room-simulation
 
-2. Skonfiguruj projekt za pomocą CMake:
+2. Configure the project using CMake:
    ```bash
    cmake -B build
    ```
 
-3. Skompiluj aplikację:
+3. Build the application:
    ```bash
    cmake --build build --config Release
    ```
-   *(CMake automatycznie skopiuje katalog `objects/` z zasobami do folderu wynikowego pliku `.exe`)*
+   *(CMake will automatically copy the objects/ directory with assets to the output folder of the .exe file)*
 
-4. Uruchom program:
-   * **Windows (Visual Studio):** `build/Release/GrafikaKomputerowa.exe` (lub `build/Debug/GrafikaKomputerowa.exe`)
+4. Run the program:
+   * **Windows (Visual Studio):** build/Release/GrafikaKomputerowa.exe (or build/Debug/GrafikaKomputerowa.exe)
    * **Linux / Ninja:** `build/GrafikaKomputerowa`
